@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lucky Draw - Shuffle + Highlight + Pháo Hoa + Firebase</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Firebase compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+
+    body {
+      font-family: 'Baloo 2', cursive, Arial, sans-serif;
+      background: linear-gradient(135deg, #dbe6f6 0%, #f6f9fc 100%);
+      color: #444;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      user-select: none;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #1a237e;
+      margin-bottom: 10px;
+    }
+
+    p#currentRound {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #283593;
+      margin: 10px 0 30px;
+    }
+
+    button {
+      background: #3f51b5;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 6px #2c387e;
+      transition: all 0.3s ease;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 400px;
+      display: block;
+    }
+    button:disabled {
+      background: #c5cae9;
+      box-shadow: none;
+      cursor: not-allowed;
+      color: #8e99f3;
+    }
+    button:hover:not(:disabled) {
+      background: #303f9f;
+      box-shadow: 0 8px #1c258c;
+    }
+    button:active:not(:disabled) {
+      box-shadow: 0 3px #1c258c;
+      transform: translateY(3px);
+    }
+
+    input[type="text"], input[type="file"] {
+      border-radius: 30px;
+      border: 1px solid #9fa8da;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 10px;
+      box-shadow: inset 0 0 6px #c5cae9;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="file"]:focus {
+      border-color: #3f51b5;
+      outline: none;
+      box-shadow: 0 0 8px #3f51b5;
+    }
+    input[type="file"] {
+      padding: 6px 10px;
+    }
+
+    p#walletAddress {
+      font-weight: 600;
+      margin-top: 10px;
+      text-align: center;
+      color: #303f9f;
+    }
+
+    ul#participantsList {
+      list-style: none;
+      padding-left: 20px;
+      max-height: 220px;
+      overflow-y: auto;
+      background: #e8eaf6;
+      border-radius: 15px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.07);
+      margin-bottom: 20px;
+    }
+    ul#participantsList li {
+      padding: 8px 12px;
+      margin-bottom: 6px;
+      border-radius: 12px;
+      background: #c5cae9;
+      color: #1a237e;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    ul#participantsList li.highlight {
+      background: #3f51b5;
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 700;
+      box-shadow: 0 0 10px 3px #7986cb;
+    }
+
+    p#winnerName {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #3949ab;
+      text-align: center;
+      margin-top: 10px;
+      min-height: 50px;
+      text-shadow: 0 0 6px #7986cb;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px dashed #9fa8da;
+      margin: 25px 0;
+      opacity: 0.6;
+    }
+
+    /* Shuffle effect box */
+    #shuffleBox {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #3f51b5;
+      color: white;
+      font-size: 2rem;
+      font-weight: 900;
+      padding: 30px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #3f51b5;
+      display: none;
+      user-select: none;
+      z-index: 9999;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎉 Lucky Draw - Shuffle + Highlight + Pháo Hoa + Firebase 🎉</h2>
+
+  <p id="currentRound">Vòng hiện tại: #1</p>
+
+  <button id="connectWalletBtn">🔗 Kết nối MetaMask</button>
+  <p id="walletAddress">Chưa kết nối ví</p>
+
+  <h3>➕ Thêm người chơi</h3>
+  <input type="text" id="participantName" placeholder="Nhập tên người chơi" />
+  <button id="addParticipantBtn">Thêm người chơi</button>
+
+  <h4>📥 Hoặc tải danh sách từ file CSV (cột 1: Mã sinh viên, cột 2: Họ và tên)</h4>
+  <input type="file" id="csvFileInput" accept=".csv" />
+
+  <h3>👥 Danh sách người chơi:</h3>
+  <ul id="participantsList"></ul>
+
+  <hr/>
+
+  <button id="drawWinnerBtn" disabled>🎲 Rút Thăm Người Thắng</button>
+
+  <h3>🏆 Người thắng vòng hiện tại:</h3>
+  <p id="winnerName">Chưa có người thắng</p>
+
+  <div id="shuffleBox"></div>
+
+<script>
+  // Firebase config và khởi tạo
+  const firebaseConfig = {
+    apiKey: "AIzaSyDZqSEoaqFDAw9wEy9n5IrkfZEVfp4NJf4",
+    authDomain: "bocthamtrungthuong-b001e.firebaseapp.com",
+    projectId: "bocthamtrungthuong-b001e",
+    storageBucket: "bocthamtrungthuong-b001e.firebasestorage.app",
+    messagingSenderId: "82056235518",
+    appId: "1:82056235518:web:4f4d15f18fc5c9c05f58af",
+    measurementId: "G-Z0SM7ZYT5W"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const contractAddress = "0x7108693F0619338A4335dDC84cbdFFE76C266D43"; // Thay địa chỉ thật
+  const contractABI = [
+    {
+      "inputs": [{"internalType":"string","name":"winnerName","type":"string"}],
+      "name":"setWinnerAndNextRound",
+      "outputs": [],
+      "stateMutability":"nonpayable",
+      "type":"function"
+    },
+    {
+      "inputs": [{"internalType":"uint256","name":"round","type":"uint256"}],
+      "name":"getWinnerOfRound",
+      "outputs": [{"internalType":"string","name":"","type":"string"}],
+      "stateMutability":"view",
+      "type":"function"
+    },
+    {
+      "inputs": [],
+      "name":"getCurrentRound",
+      "outputs": [{"internalType":"uint256","name":"","type":"uint256"}],
+      "stateMutability":"view",
+      "type":"function"
+    }
+  ];
+
+  let web3;
+  let contract;
+  let accounts = [];
+  let participants = [];
+  let currentRoundNumber = 1;
+  let shuffleIntervalId = null;
+
+  const walletAddressP = document.getElementById('walletAddress');
+  const connectWalletBtn = document.getElementById('connectWalletBtn');
+  const participantNameInput = document.getElementById('participantName');
+  const addParticipantBtn = document.getElementById('addParticipantBtn');
+  const participantsList = document.getElementById('participantsList');
+  const csvFileInput = document.getElementById('csvFileInput');
+  const drawWinnerBtn = document.getElementById('drawWinnerBtn');
+  const winnerNameP = document.getElementById('winnerName');
+  const currentRoundSpan = document.getElementById('currentRound');
+  const shuffleBox = document.getElementById('shuffleBox');
+
+  connectWalletBtn.onclick = async () => {
+    if(window.ethereum) {
+      try {
+        web3 = new Web3(window.ethereum);
+        accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        walletAddressP.textContent = "Đã kết nối ví: " + accounts[0];
+        connectWalletBtn.disabled = true;
+        drawWinnerBtn.disabled = false;
+        contract = new web3.eth.Contract(contractABI, contractAddress);
+        await loadCurrentRound();
+        loadCurrentWinner();
+      } catch(err) {
+        walletAddressP.textContent = "Kết nối thất bại: " + err.message;
+      }
+    } else {
+      walletAddressP.textContent = "Vui lòng cài đặt MetaMask!";
+    }
+  };
+
+  addParticipantBtn.onclick = () => {
+    const name = participantNameInput.value.trim();
+    if(name) {
+      participants.push(name);
+      updateParticipantsList();
+      participantNameInput.value = "";
+    } else {
+      alert("Vui lòng nhập tên hợp lệ.");
+    }
+  };
+
+  function updateParticipantsList() {
+    participantsList.innerHTML = "";
+    participants.forEach(name => {
+      const li = document.createElement('li');
+      li.textContent = name;
+      participantsList.appendChild(li);
+    });
+  }
+
+  csvFileInput.onchange = (event) => {
+    const file = event.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const lines = text.split(/\r?\n/);
+      participants = [];
+      lines.forEach((line, idx) => {
+        if(idx === 0) return; // skip header
+        const cols = line.split(",");
+        if(cols.length >= 2) {
+          const maSV = cols[0].trim();
+          const hoTen = cols[1].trim();
+          if(hoTen) participants.push(maSV + " - " + hoTen);
+        }
+      });
+      updateParticipantsList();
+    };
+    reader.readAsText(file);
+  };
+
+  function shuffleEffectStart(interval = 70) {
+    if (shuffleIntervalId) return;
+    shuffleBox.style.display = "block";
+    shuffleIntervalId = setInterval(() => {
+      if (participants.length === 0) return;
+      const randomIndex = Math.floor(Math.random() * participants.length);
+      shuffleBox.textContent = participants[randomIndex];
+    }, interval);
+  }
+
+  function shuffleEffectStop() {
+    if (shuffleIntervalId) {
+      clearInterval(shuffleIntervalId);
+      shuffleIntervalId = null;
+      shuffleBox.style.display = "none";
+    }
+  }
+
+  function runHighlightAnimation(winnerIndex) {
+    return new Promise((resolve) => {
+      const totalSteps = 60;
+      let currentStep = 0;
+      let currentIndex = 0;
+      const listItems = [...participantsList.children];
+      const speedInitial = 50;
+      let speed = speedInitial;
+
+      function step() {
+        listItems.forEach(li => li.classList.remove('highlight'));
+        listItems[currentIndex].classList.add('highlight');
+
+        currentStep++;
+
+        if (currentStep >= totalSteps && currentIndex === winnerIndex) {
+          resolve();
+          return;
+        }
+
+        if (currentStep > totalSteps * 0.6) {
+          speed += 15;
+        }
+
+        currentIndex = (currentIndex + 1) % listItems.length;
+        setTimeout(step, speed);
+      }
+
+      step();
+    });
+  }
+
+  function shootConfetti() {
+    const duration = 3 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        return;
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: 0.8 } }));
+    }, 250);
+  }
+
+  async function saveWinnerToFirestore(round, winner) {
+    try {
+      await db.collection('winners').add({
+        round,
+        winner,
+        chosenAt: new Date()
+      });
+      console.log("Lưu người thắng thành công vào Firestore");
+    } catch (error) {
+      console.error("Lỗi lưu người thắng:", error);
+    }
+  }
+
+  drawWinnerBtn.onclick = async () => {
+    if (participants.length === 0) {
+      alert("Danh sách người chơi đang trống.");
+      return;
+    }
+
+    winnerNameP.textContent = "";
+
+    try {
+      shuffleEffectStart();
+
+      const winnerIndex = Math.floor(Math.random() * participants.length);
+      const winner = participants[winnerIndex];
+
+      await runHighlightAnimation(winnerIndex);
+
+      shuffleEffectStop();
+
+      winnerNameP.textContent = "Đang gửi người thắng lên blockchain...";
+      await contract.methods.setWinnerAndNextRound(winner).send({ from: accounts[0] });
+
+      // Lưu lên Firestore
+      await saveWinnerToFirestore(Number(currentRoundNumber), winner);
+
+      currentRoundNumber = await contract.methods.getCurrentRound().call();
+      currentRoundSpan.textContent = "Vòng hiện tại: #" + currentRoundNumber;
+
+      winnerNameP.textContent = "🏆 Người thắng: " + winner;
+
+      [...participantsList.children].forEach(li => li.classList.remove('highlight'));
+      participantsList.children[winnerIndex].classList.add('highlight');
+
+      shootConfetti();
+
+    } catch (err) {
+      shuffleEffectStop();
+      winnerNameP.textContent = "Lỗi: " + err.message;
+      [...participantsList.children].forEach(li => li.classList.remove('highlight'));
+    }
+  };
+
+  async function loadCurrentWinner() {
+    try {
+      const roundToCheck = currentRoundNumber - 1 > 0 ? currentRoundNumber - 1 : 1;
+      const winner = await contract.methods.getWinnerOfRound(roundToCheck).call();
+      if(winner && winner.length > 0) {
+        winnerNameP.textContent = "🏆 Người thắng vòng #" + roundToCheck + ": " + winner;
+      } else {
+        winnerNameP.textContent = "Chưa có người thắng";
+      }
+    } catch {
+      winnerNameP.textContent = "Chưa có người thắng";
+    }
+  }
+
+  async function loadCurrentRound() {
+    try {
+      const round = await contract.methods.getCurrentRound().call();
+      currentRoundNumber = Number(round);
+      currentRoundSpan.textContent = "Vòng hiện tại: #" + currentRoundNumber;
+    } catch {
+      currentRoundNumber = 1;
+      currentRoundSpan.textContent = "Vòng hiện tại: #1";
+    }
+  }
+</script>
+</body>
+</html>
