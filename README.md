@@ -18,6 +18,8 @@ Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng 
 
 ![Hợp Đồng Thông Minh](images/Picture1.png)
 
+- Giao diện
+
 ## Hướng dẫn chạy dự án
 
 ```bash
