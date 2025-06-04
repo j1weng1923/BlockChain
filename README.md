@@ -16,7 +16,7 @@ Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng 
 
 ## Luồng hoạt động chính
 
-(images/Pictute1.png)
+![Hợp Đồng Thông Minh](images/Picture1.png)
 
 ## Hướng dẫn chạy dự án
 
