@@ -46,8 +46,60 @@ Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng 
 
 ## Hướng dẫn chạy dự án
 
-```bash
-git clone https://github.com/j1weng1923/BlockChain.git
-cd BlockChain
-npm install
-npm start
+Dự Án Rút thăm trúng thưởng trong lớp học
+Đây là một hệ thống rút thăm may mắn trên web, được xây dựng bằng Web3.js, Firebase và MetaMask. Hệ thống cho phép người tham gia được thêm vào thủ công hoặc qua file CSV, chọn ngẫu nhiên người thắng và tích hợp với smart contract đã được triển khai trên Ethereum.
+
+Tính Năng:
+Kết Nối MetaMask: Cho phép tương tác với blockchain Ethereum.
+
+Thêm Người Tham Gia: Thêm thủ công hoặc tải lên file CSV.
+
+Chọn Người Thắng Ngẫu Nhiên: Tên người tham gia được xáo trộn và người thắng được làm nổi bật.
+
+Hiệu Ứng Pháo Hoa: Mừng chiến thắng với hiệu ứng pháo hoa.
+
+Lưu Kết Quả: Lưu thông tin người thắng vào Firebase và smart contract trên Ethereum.
+
+Yêu Cầu:
+MetaMask: Đảm bảo bạn đã cài đặt và cấu hình MetaMask.
+
+Firebase: Cấu hình Firebase trong dự án và thay thế thông tin cấu hình Firebase trong script.
+
+Web3.js: Cần thiết để tương tác với Ethereum.
+
+Confetti.js: Tạo hiệu ứng pháo hoa khi người thắng được chọn.
+
+Hướng Dẫn Cài Đặt:
+Clone Repository:
+
+bash
+Copy
+git clone https://github.com/yourusername/your-repository.git
+cd your-repository
+Cài Đặt Các Thư Viện Phụ Thuộc:
+Dự án này không yêu cầu cài đặt thư viện ngoài vì các thư viện như Web3.js, Confetti và Firebase đã được tải từ các nguồn CDN. Đảm bảo kết nối internet ổn định để tải chúng.
+
+Cấu Hình Firebase:
+
+Truy cập Firebase Console.
+
+Tạo một dự án mới và cấu hình Firebase Firestore.
+
+Thay thế cấu hình Firebase trong script bằng thông tin của bạn.
+
+Triển Khai Smart Contract:
+
+Bạn cần một ví Ethereum (MetaMask) và một mạng thử nghiệm của Ethereum.
+
+Thay thế địa chỉ smart contract trong script bằng địa chỉ smart contract của bạn.
+
+Chạy Dự Án:
+Mở tệp index.html trong trình duyệt.
+
+Tương Tác với Ứng Dụng:
+
+Kết Nối MetaMask với blockchain.
+
+Thêm Người Tham Gia thủ công hoặc tải lên file CSV.
+
+Rút Thăm Người Thắng và xem hiệu ứng hoạt hình và pháo hoa.
