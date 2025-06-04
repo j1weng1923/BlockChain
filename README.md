@@ -14,6 +14,10 @@ Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng 
 - Node.js cho backend.
 - MetaMask để kết nối ví.
 
+## Luồng hoạt động chính
+
+(images/Pictute1.png)
+
 ## Hướng dẫn chạy dự án
 
 ```bash
