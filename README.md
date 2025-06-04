@@ -1,105 +1,119 @@
-# BlockChain Rút thăm trúng thưởng trong lớp học
+# Blockchain Rút Thăm Trúng Thưởng trong Lớp Học
 
-## Giới thiệu
-Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng phi tập trung trên nền tảng Ethereum.
+## Giới Thiệu
+Dự án "Blockchain Rút Thăm Trúng Thưởng trong Lớp Học" là hệ thống rút thăm may mắn phi tập trung được xây dựng trên nền tảng Ethereum. Hệ thống này cho phép tổ chức các buổi rút thăm công bằng, minh bạch với sự tham gia của sinh viên. Các kết quả rút thăm được ghi lại trên blockchain, bảo đảm tính toàn vẹn và không thể thay đổi.
 
-## Tính năng chính
-- Triển khai hợp đồng thông minh (Smart Contract) trên mạng Sepolia testnet.
-- Giao diện người dùng để tham gia rút thăm.
-- Hiển thị kết quả ngẫu nhiên, minh bạch.
+## Tính Năng Chính
+- **Triển khai hợp đồng thông minh** trên Ethereum Sepolia testnet.
+- **Giao diện người dùng** dễ sử dụng để tham gia rút thăm.
+- **Hiển thị kết quả ngẫu nhiên** một cách minh bạch và công bằng.
+- **Lưu trữ kết quả** trên Firebase và Blockchain để dễ dàng quản lý và kiểm tra.
+- **Chức năng tải lên danh sách sinh viên** qua file CSV hoặc thêm thủ công.
+- **Chọn người thắng ngẫu nhiên** từ danh sách sinh viên tham gia.
+- **Hiệu ứng pháo hoa** khi người thắng được chọn, tạo không khí vui tươi cho sự kiện.
+- **Lưu thông tin kết quả**: Kết quả người thắng được ghi lại trên Firebase và smart contract trên Ethereum.
 
-## Công nghệ sử dụng
-- Solidity cho hợp đồng thông minh.
-- HTML cho frontend.
-- Firebase cho backend.
-- MetaMask để kết nối ví.
+## Công Nghệ Sử Dụng
+- **Solidity**: Ngôn ngữ lập trình để phát triển hợp đồng thông minh.
+- **Web3.js**: Thư viện JavaScript cho phép tương tác với Ethereum blockchain.
+- **Firebase**: Dịch vụ backend để lưu trữ dữ liệu và quản lý thông tin người tham gia và kết quả.
+- **MetaMask**: Ví Ethereum để kết nối với blockchain và thực hiện các giao dịch.
+- **HTML/CSS/JavaScript**: Để xây dựng giao diện người dùng trên web.
+- **Confetti.js**: Thư viện để tạo hiệu ứng pháo hoa khi người thắng được chọn.
 
-## Luồng hoạt động chính
+## Luồng Hoạt Động Chính
+1. **Giao diện người dùng**  
+   ![Hợp Đồng Thông Minh](images/Picture1.png)
+   - Giao diện bắt đầu của hệ thống.
 
-![Hợp Đồng Thông Minh](images/Picture1.png)
+2. **Kết nối đến ví MetaMask**  
+   ![Kết nối đến ví metamask](images/Picture2.png)
+   - Người dùng kết nối ví MetaMask để tương tác với blockchain.
 
-- Giao diện
+3. **Tải file danh sách sinh viên lên**  
+   ![Tải file danh sách sinh viên lên](images/Picture3.png)
+   - Tải lên file CSV chứa danh sách sinh viên tham gia.
 
-![Kết nối đến ví metamask](images/Picture2.png)
+4. **Hiển thị danh sách sinh viên tham gia**  
+   ![Hiển thị danh sách sinh viên tham gia](images/Picture4.png)
+   - Hiển thị tất cả người tham gia từ file CSV hoặc đã được thêm thủ công.
 
-- Kết nối đến ví metamask
+5. **Rút thăm tìm ra người may mắn**  
+   ![Rút thăm tìm ra người may mắn](images/Picture5.png)
+   - Hệ thống thực hiện rút thăm ngẫu nhiên và xác định người thắng.
 
-![Tải file danh sách sinh viên lên](images/Picture3.png)
+6. **Mã hash và thông tin người chiến thắng được gửi lên Blockchain**  
+   ![Mã hash và thông tin người chiến thắng được gửi lên Blockchain](images/Picture6.png)
+   - Thông tin người thắng được gửi lên Ethereum blockchain để bảo đảm tính minh bạch.
 
-- Tải file danh sách sinh viên lên
+7. **Lưu kết quả trên Firebase để dễ dàng quản lý**  
+   ![Đồng thời lưu trên firebase để dễ dàng quản lý](images/Picture7.png)
+   - Kết quả người thắng được lưu trữ trên Firebase để có thể truy xuất và kiểm tra dễ dàng.
 
-![Hiển thị danh sách sinh viên tham gia](images/Picture4.png)
+## Hướng Dẫn Chạy Dự Án
 
-- Hiển thị danh sách sinh viên tham gia
+### Mô Tả Dự Án
+Hệ thống "Rút Thăm Trúng Thưởng trong Lớp Học" là một ứng dụng web sử dụng công nghệ Web3.js, Firebase và MetaMask, cho phép người tham gia thêm thủ công hoặc tải file CSV chứa thông tin sinh viên. Hệ thống sẽ chọn ngẫu nhiên người thắng và lưu trữ kết quả lên smart contract trên Ethereum và Firebase.
 
-![Rút thăm tìm ra người may mắn](images/Picture5.png)
+### Tính Năng:
+- **Kết nối MetaMask**: Cho phép ứng dụng tương tác với Blockchain Ethereum thông qua MetaMask.
+- **Thêm người tham gia**: Người tham gia có thể thêm thủ công hoặc tải lên file CSV.
+- **Chọn người thắng ngẫu nhiên**: Danh sách người tham gia sẽ được xáo trộn, và người thắng sẽ được làm nổi bật.
+- **Hiệu ứng pháo hoa**: Mừng chiến thắng với hiệu ứng pháo hoa.
+- **Lưu kết quả**: Lưu trữ kết quả người thắng trên cả Firebase và Blockchain Ethereum.
 
-- Rút thăm tìm ra người may mắn
+### Yêu Cầu:
+- **MetaMask**: Đảm bảo bạn đã cài đặt MetaMask và kết nối với mạng Ethereum Sepolia testnet.
+- **Firebase**: Cấu hình Firebase Firestore cho dự án và thay thế thông tin cấu hình trong mã nguồn.
+- **Web3.js**: Cần thiết để tương tác với Ethereum Blockchain.
+- **Confetti.js**: Dùng để tạo hiệu ứng pháo hoa khi người thắng được chọn.
 
-![Mã hash và thông tin người chiến thắng được gửi lên BlockChain](images/Picture6.png)
-
-- Mã hash và thông tin người chiến thắng được gửi lên BlockChain
-
-![Đồng thời lưu trên firebase để dễ dàng quản lý](images/Picture7.png)
-
-- Đồng thời lưu trên firebase để dễ dàng quản lý
-
-## Hướng dẫn chạy dự án
-
-Dự Án Rút thăm trúng thưởng trong lớp học
-Đây là một hệ thống rút thăm may mắn trên web, được xây dựng bằng Web3.js, Firebase và MetaMask. Hệ thống cho phép người tham gia được thêm vào thủ công hoặc qua file CSV, chọn ngẫu nhiên người thắng và tích hợp với smart contract đã được triển khai trên Ethereum.
-
-Tính Năng:
-Kết Nối MetaMask: Cho phép tương tác với blockchain Ethereum.
-
-Thêm Người Tham Gia: Thêm thủ công hoặc tải lên file CSV.
-
-Chọn Người Thắng Ngẫu Nhiên: Tên người tham gia được xáo trộn và người thắng được làm nổi bật.
-
-Hiệu Ứng Pháo Hoa: Mừng chiến thắng với hiệu ứng pháo hoa.
-
-Lưu Kết Quả: Lưu thông tin người thắng vào Firebase và smart contract trên Ethereum.
-
-Yêu Cầu:
-MetaMask: Đảm bảo bạn đã cài đặt và cấu hình MetaMask.
-
-Firebase: Cấu hình Firebase trong dự án và thay thế thông tin cấu hình Firebase trong script.
-
-Web3.js: Cần thiết để tương tác với Ethereum.
-
-Confetti.js: Tạo hiệu ứng pháo hoa khi người thắng được chọn.
-
-Hướng Dẫn Cài Đặt:
-Clone Repository:
-
-bash
-Copy
+### Hướng Dẫn Cài Đặt:
+#### 1. Clone Repository:
+Đầu tiên, bạn cần clone repository về máy của mình:
+```bash
 git clone https://github.com/yourusername/your-repository.git
 cd your-repository
-Cài Đặt Các Thư Viện Phụ Thuộc:
-Dự án này không yêu cầu cài đặt thư viện ngoài vì các thư viện như Web3.js, Confetti và Firebase đã được tải từ các nguồn CDN. Đảm bảo kết nối internet ổn định để tải chúng.
+2. Cài Đặt Các Thư Viện Phụ Thuộc:
+Dự án này không yêu cầu cài đặt thư viện ngoài. Các thư viện như Web3.js, Confetti.js và Firebase được tải trực tiếp từ các CDN. Đảm bảo kết nối internet ổn định để tải các thư viện này.
 
-Cấu Hình Firebase:
+3. Cấu Hình Firebase:
+Truy cập vào Firebase Console.
 
-Truy cập Firebase Console.
+Tạo một dự án Firebase mới và cấu hình Firebase Firestore.
 
-Tạo một dự án mới và cấu hình Firebase Firestore.
+Lấy thông tin cấu hình Firebase từ dự án của bạn và thay thế vào đoạn mã trong firebaseConfig trong tệp index.html hoặc app.js (tùy thuộc vào nơi bạn cấu hình Firebase).
 
-Thay thế cấu hình Firebase trong script bằng thông tin của bạn.
+Ví dụ cấu hình Firebase:
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+firebase.initializeApp(firebaseConfig);
+4. Triển Khai Smart Contract:
+Để triển khai smart contract, bạn cần có ví Ethereum (MetaMask) và một mạng thử nghiệm của Ethereum (như Sepolia).
 
-Triển Khai Smart Contract:
+Thay thế địa chỉ của smart contract trong mã nguồn của bạn (tìm phần mã có chứa contractAddress).
 
-Bạn cần một ví Ethereum (MetaMask) và một mạng thử nghiệm của Ethereum.
+Cài đặt Remix IDE để phát triển và triển khai hợp đồng thông minh của bạn lên mạng Sepolia hoặc bất kỳ testnet nào mà bạn chọn.
 
-Thay thế địa chỉ smart contract trong script bằng địa chỉ smart contract của bạn.
+5. Chạy Dự Án:
+Sau khi cài đặt và cấu hình xong các phần trên, bạn có thể mở tệp index.html trong trình duyệt của mình để chạy dự án.
 
-Chạy Dự Án:
-Mở tệp index.html trong trình duyệt.
+Kết nối MetaMask với Blockchain Ethereum.
 
-Tương Tác với Ứng Dụng:
+Thêm người tham gia thủ công hoặc tải lên file CSV chứa danh sách sinh viên.
 
-Kết Nối MetaMask với blockchain.
+Rút thăm người thắng và tận hưởng hiệu ứng hoạt hình và pháo hoa.
 
-Thêm Người Tham Gia thủ công hoặc tải lên file CSV.
+Liên Hệ
+Tác giả: Nguyễn Duy Quang
 
-Rút Thăm Người Thắng và xem hiệu ứng hoạt hình và pháo hoa.
+Email: quangduy1923@gmail.com
+
+Chúc bạn thành công với dự án Blockchain rút thăm trúng thưởng!
