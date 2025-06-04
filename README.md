@@ -24,31 +24,31 @@ Dự án "Blockchain Rút Thăm Trúng Thưởng trong Lớp Học" là hệ th�
 ## Luồng Hoạt Động Chính
 1. **Giao diện người dùng**  
    ![Hợp Đồng Thông Minh](images/Picture1.png)
-   - Giao diện bắt đầu của hệ thống.
+   
 
 2. **Kết nối đến ví MetaMask**  
    ![Kết nối đến ví metamask](images/Picture2.png)
-   - Người dùng kết nối ví MetaMask để tương tác với blockchain.
+   
 
 3. **Tải file danh sách sinh viên lên**  
    ![Tải file danh sách sinh viên lên](images/Picture3.png)
-   - Tải lên file CSV chứa danh sách sinh viên tham gia.
+  
 
 4. **Hiển thị danh sách sinh viên tham gia**  
    ![Hiển thị danh sách sinh viên tham gia](images/Picture4.png)
-   - Hiển thị tất cả người tham gia từ file CSV hoặc đã được thêm thủ công.
+   
 
 5. **Rút thăm tìm ra người may mắn**  
    ![Rút thăm tìm ra người may mắn](images/Picture5.png)
-   - Hệ thống thực hiện rút thăm ngẫu nhiên và xác định người thắng.
+   
 
 6. **Mã hash và thông tin người chiến thắng được gửi lên Blockchain**  
    ![Mã hash và thông tin người chiến thắng được gửi lên Blockchain](images/Picture6.png)
-   - Thông tin người thắng được gửi lên Ethereum blockchain để bảo đảm tính minh bạch.
+  
 
 7. **Lưu kết quả trên Firebase để dễ dàng quản lý**  
    ![Đồng thời lưu trên firebase để dễ dàng quản lý](images/Picture7.png)
-   - Kết quả người thắng được lưu trữ trên Firebase để có thể truy xuất và kiểm tra dễ dàng.
+   
 
 ## Hướng Dẫn Chạy Dự Án
 
@@ -67,11 +67,10 @@ Hệ thống "Rút Thăm Trúng Thưởng trong Lớp Học" là một ứng d�
 - **Firebase**: Cấu hình Firebase Firestore cho dự án và thay thế thông tin cấu hình trong mã nguồn.
 - **Web3.js**: Cần thiết để tương tác với Ethereum Blockchain.
 - **Confetti.js**: Dùng để tạo hiệu ứng pháo hoa khi người thắng được chọn.
-
+```bash
 ### Hướng Dẫn Cài Đặt:
 #### 1. Clone Repository:
 Đầu tiên, bạn cần clone repository về máy của mình:
-```bash
 git clone https://github.com/yourusername/your-repository.git
 cd your-repository
 2. Cài Đặt Các Thư Viện Phụ Thuộc:
