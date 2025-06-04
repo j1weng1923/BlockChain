@@ -1,4 +1,4 @@
-# BlockChain Project
+# BlockChain Rút thăm trúng thưởng trong lớp học
 
 ## Giới thiệu
 Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng phi tập trung trên nền tảng Ethereum.
