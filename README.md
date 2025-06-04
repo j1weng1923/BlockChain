@@ -10,8 +10,8 @@ Dự án Blockchain nhằm xây dựng hệ thống rút thăm trúng thưởng 
 
 ## Công nghệ sử dụng
 - Solidity cho hợp đồng thông minh.
-- React cho frontend.
-- Node.js cho backend.
+- HTML cho frontend.
+- Firebase cho backend.
 - MetaMask để kết nối ví.
 
 ## Luồng hoạt động chính
