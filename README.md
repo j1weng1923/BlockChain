@@ -71,7 +71,7 @@ Hệ thống "Rút Thăm Trúng Thưởng trong Lớp Học" là một ứng d�
 ### Hướng Dẫn Cài Đặt:
 #### 1. Clone Repository:
 Đầu tiên, bạn cần clone repository về máy của mình:
-git clone https://github.com/yourusername/your-repository.git
+git clone https://github.com/j1weng1923/BlockChain.git
 cd your-repository
 2. Cài Đặt Các Thư Viện Phụ Thuộc:
 Dự án này không yêu cầu cài đặt thư viện ngoài. Các thư viện như Web3.js, Confetti.js và Firebase được tải trực tiếp từ các CDN. Đảm bảo kết nối internet ổn định để tải các thư viện này.
